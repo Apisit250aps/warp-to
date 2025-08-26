@@ -1,7 +1,7 @@
 import z from 'zod'
 
 export const warpSchema = z.object({
-  type: z.enum(['av', 'vk', 'ig']),
+  type: z.enum(['av', 'vk', 'ig', 'unknown']),
   content: z
     .string()
     .trim()

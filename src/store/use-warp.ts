@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios'
 
 import { Warp } from '@/models/schema'
 
-type WarpType = 'all' | 'av' | 'vk' | 'ig'
+type WarpType = 'all' | 'av' | 'vk' | 'ig' | 'unknown'
 
 type WarpState = {
   warps: Warp[]
@@ -22,7 +22,7 @@ type WarpState = {
 
 export const useWarp = create<WarpState>((set, get) => ({
   warps: [],
-  warpContent: { all: '', av: '', vk: '', ig: '' },
+  warpContent: { all: '-', av: '-', vk: '-', ig: '-', unknown: '-' },
 
   // init status
   loading: false,
@@ -37,18 +37,22 @@ export const useWarp = create<WarpState>((set, get) => ({
     set({
       warpContent: {
         all: _.sample(warps)?.content || warpContent.all || '',
+        unknown:
+          _.sample(warps.filter((w) => w.type === 'unknown'))?.content ||
+          warpContent.unknown ||
+          '-',
         av:
           _.sample(warps.filter((w) => w.type === 'av'))?.content ||
           warpContent.av ||
-          '',
+          '-',
         vk:
           _.sample(warps.filter((w) => w.type === 'vk'))?.content ||
           warpContent.vk ||
-          '',
+          '-',
         ig:
           _.sample(warps.filter((w) => w.type === 'ig'))?.content ||
           warpContent.ig ||
-          '',
+          '-',
       },
     })
   },

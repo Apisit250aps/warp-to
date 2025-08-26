@@ -30,7 +30,7 @@ function GodTools({ children }: { children: React.ReactNode }) {
   const form = useForm<Warp>({
     resolver: zodResolver(warpSchema),
     defaultValues: {
-      type: 'av',
+      type: 'unknown',
       content: '',
     },
     mode: 'onChange',
@@ -76,6 +76,9 @@ function GodTools({ children }: { children: React.ReactNode }) {
                       onValueChange={(v) => v && field.onChange(v)}
                       className="justify-start"
                     >
+                      <ToggleGroupItem value="unknown" aria-label="UN">
+                        UN
+                      </ToggleGroupItem>
                       <ToggleGroupItem value="av" aria-label="AV">
                         AV
                       </ToggleGroupItem>
