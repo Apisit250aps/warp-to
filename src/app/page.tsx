@@ -16,9 +16,6 @@ export type IconProps = React.HTMLAttributes<SVGElement>
 export default function Home() {
   const theme = useTheme()
   const shadowColor = theme.resolvedTheme === 'dark' ? 'white' : 'black'
-  const customCommandMap = {
-    warp: 'warp to',
-  }
 
   const { warpContent, random, load } = useWarp()
 
