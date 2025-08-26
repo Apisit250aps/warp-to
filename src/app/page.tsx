@@ -5,6 +5,7 @@ import { ScriptCopyBtn } from '@/components/magicui/script-copy-btn'
 import { Dices, NotebookPen } from 'lucide-react'
 import { LineShadowText } from '@/components/magicui/line-shadow-text'
 import { useTheme } from 'next-themes'
+import GodTools from '@/components/share/god-tools'
 
 export type IconProps = React.HTMLAttributes<SVGElement>
 
@@ -41,7 +42,9 @@ export default function Home() {
             <Dices />
           </DockIcon>
           <DockIcon>
-            <NotebookPen />
+            <GodTools>
+              <NotebookPen />
+            </GodTools>
           </DockIcon>
         </Dock>
       </div>
