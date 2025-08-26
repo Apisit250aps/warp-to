@@ -24,7 +24,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group' // ⭐ ใช้ toggle group
 import { Warp, warpSchema } from '@/models/schema'
-
+import { useWarp } from '@/store/use-warp'
+import { toast } from 'sonner'
 function GodTools({ children }: { children: React.ReactNode }) {
   const form = useForm<Warp>({
     resolver: zodResolver(warpSchema),
@@ -35,8 +36,18 @@ function GodTools({ children }: { children: React.ReactNode }) {
     mode: 'onChange',
   })
 
-  const onSubmit = (values: Warp) => {
-    console.log('GodTools submit:', values)
+  const { post, error } = useWarp()
+
+  const onSubmit = async (values: Warp) => {
+    await post(values)
+
+    if (error) {
+      toast.error(error)
+      return
+    }
+    toast.success('Warp submitted successfully!')
+    form.reset()
+    return
   }
 
   return (

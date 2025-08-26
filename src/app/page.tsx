@@ -7,6 +7,10 @@ import { LineShadowText } from '@/components/magicui/line-shadow-text'
 import { useTheme } from 'next-themes'
 import GodTools from '@/components/share/god-tools'
 
+import { useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import { useWarp } from '@/store/use-warp'
+
 export type IconProps = React.HTMLAttributes<SVGElement>
 
 export default function Home() {
@@ -15,6 +19,13 @@ export default function Home() {
   const customCommandMap = {
     warp: 'warp to',
   }
+
+  const { warpContent, random, load } = useWarp()
+
+  useEffect(() => {
+    load()
+  }, [load])
+
   return (
     <>
       <div className="absolute top-0 w-full">
@@ -29,21 +40,25 @@ export default function Home() {
       </div>
       <div className="h-screen flex items-center justify-center">
         <ScriptCopyBtn
-          showMultiplePackageOptions={false}
+          showMultiplePackageOptions={true}
           codeLanguage="shell"
           lightTheme="nord"
           darkTheme="vitesse-dark"
-          commandMap={customCommandMap}
+          commandMap={warpContent}
         />
       </div>
       <div className="absolute bottom-0 w-full pb-10">
         <Dock direction="middle">
           <DockIcon>
-            <Dices />
+            <Button variant={'ghost'} onClick={random}>
+              <Dices />
+            </Button>
           </DockIcon>
           <DockIcon>
             <GodTools>
-              <NotebookPen />
+              <Button variant={'ghost'}>
+                <NotebookPen />
+              </Button>
             </GodTools>
           </DockIcon>
         </Dock>
