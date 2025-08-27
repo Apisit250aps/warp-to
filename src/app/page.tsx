@@ -31,7 +31,6 @@ export default function Home() {
             <LineShadowText className="italic" shadowColor={shadowColor}>
               Warp
             </LineShadowText>
-            {' >'} To
           </h1>
         </div>
       </div>
