@@ -103,7 +103,6 @@ export const metadata: Metadata = {
 }
 
 import { Toaster } from '@/components/ui/sonner'
-import Head from 'next/head'
 import Script from 'next/script'
 
 export default function RootLayout({
@@ -111,31 +110,36 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || ''
   return (
     <html lang="en">
       <head>
         {/* GA4: Google Tag Manager */}
-        <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=GTM-WR4FQPR6"
-        />
+        {GTM_ID ? (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`}
+            />
 
-        <Script
-          id="gtag-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
+            <Script
+              id="gtag-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'GTM-WR4FQPR6', {
+            gtag('config', '${GTM_ID}', {
               page_path: window.location.pathname,
               anonymize_ip: true,
               cookie_flags: 'SameSite=None;Secure',
             });
           `,
-          }}
-        />
+              }}
+            />
+          </>
+        ) : null}
       </head>
       <body className={`${itim.variable} antialiased`}>
         <Toaster />
@@ -145,7 +149,7 @@ export default function RootLayout({
         </div>
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WR4FQPR6"
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
