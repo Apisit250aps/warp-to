@@ -103,6 +103,8 @@ export const metadata: Metadata = {
 }
 
 import { Toaster } from '@/components/ui/sonner'
+import Head from 'next/head'
+import Script from 'next/script'
 
 export default function RootLayout({
   children,
@@ -111,12 +113,44 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* GA4: Google Tag Manager */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=GTM-WR4FQPR6"
+        />
+
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'GTM-WR4FQPR6', {
+              page_path: window.location.pathname,
+              anonymize_ip: true,
+              cookie_flags: 'SameSite=None;Secure',
+            });
+          `,
+          }}
+        />
+      </head>
       <body className={`${itim.variable} antialiased`}>
         <Toaster />
         <div className="relative h-screen w-full overflow-hidden">
           <RetroGrid />
           {children}
         </div>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WR4FQPR6"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          ></iframe>
+        </noscript>
       </body>
     </html>
   )
